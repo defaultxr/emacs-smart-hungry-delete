@@ -185,7 +185,8 @@ word--, else fall back to (delete-backward-char 1).
 With PREFIX just delete one char."
   (interactive "P")
   (if prefix
-      (if backwards (delete-char -1) (delete-char 1))
+      (let ((num (if (integerp prefix) prefix 1)))
+        (if backwards (delete-char (- num)) (delete-char num)))
   (let (check kill-end-match change-point fallback)
     (if backwards
         (setq check (lambda (regexp)
